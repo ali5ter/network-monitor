@@ -1,0 +1,15 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    isDefault: true
+    url: http://192.168.1.121:8086
+    jsonData:
+      version: Flux
+      organization: network_monitor
+      defaultBucket: speedtests
+      tlsSkipVerify: true
+    secureJsonData:
+      token: my-influx-token

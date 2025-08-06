@@ -1,0 +1,77 @@
+{
+  "id": null,
+  "title": "Internet Speed Monitor",
+  "tags": ["network", "speedtest"],
+  "timezone": "browser",
+  "schemaVersion": 37,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-24h", "to": "now" },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Download Speed (Mbps)",
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "refId": "A",
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"download_bandwidth\") |> map(fn: (r) => ({ r with _value: float(v: r._value) / 1000000.0 }))"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "Mbps" } },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Upload Speed (Mbps)",
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "refId": "B",
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"upload_bandwidth\") |> map(fn: (r) => ({ r with _value: float(v: r._value) / 1000000.0 }))"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "Mbps" } },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Ping Latency (ms)",
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "refId": "C",
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"ping_latency\")"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "ms" } },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Ping Jitter (ms)",
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "refId": "D",
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"ping_jitter\")"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "ms" } },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Packet Loss (%)",
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "refId": "E",
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"packet_loss\")"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent" } },
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 14 }
+    }
+  ]
+}

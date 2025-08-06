@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>edu.lewis-bowen.networkspeed</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>${PYTHON_BIN}</string>
+        <string>${PYTHON_SCRIPT_PATH}</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>INFLUX_URL</key>
+        <string>http://${SERVER_IP}:${INFLUXDB_PORT}</string>
+        <key>INFLUX_TOKEN</key>
+        <string>${INFLUX_TOKEN}</string>
+        <key>INFLUX_ORG</key>
+        <string>${INFLUX_ORG}</string>
+        <key>INFLUX_BUCKET</key>
+        <string>${INFLUX_BUCKET}</string>
+    </dict>
+
+    <key>StartInterval</key>
+    <integer>3600</integer> <!-- 1 hour -->
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>$HOME/Library/Logs/networkspeed.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>$HOME/Library/Logs/networkspeed.err</string>
+</dict>
+</plist>

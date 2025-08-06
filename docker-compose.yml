@@ -1,0 +1,45 @@
+services:
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    ports:
+      - "${INFLUXDB_PORT}:8086"
+    networks:
+      - monitor-net
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD}
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN}
+
+  grafana:
+    depends_on:
+      - influxdb
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    networks:
+      - monitor-net
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/dashboards/netmon:/etc/grafana/provisioning/dashboards/netmon
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_SECURITY_DISABLE_INITIAL_ADMIN_CHANGE: ${GRAFANA_DISABLE_INITIAL_ADMIN_CHANGE}
+      GF_SERVER_ROOT_URL: http://${SERVER_IP}:${GRAFANA_PORT}
+
+volumes:
+  influxdb-data:
+  grafana-storage:
+
+networks:
+  monitor-net:
+    driver: bridge
