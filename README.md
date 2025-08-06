@@ -14,9 +14,9 @@ I wrote this when I was not seeing the bandwidth that my cable provider said the
 
 ## Requirements
 
-- macOS (tested on Sequoia)
-- Docker Desktop
-- Homebrew
+- Apple macOS (tested on Sequoia)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Homebrew](https://brew.sh)
 - [Speedtest CLI by Ookla](https://www.speedtest.net/apps/cli)
 - Python 3.9+
 
