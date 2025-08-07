@@ -90,11 +90,11 @@ def parse_json(json_string):
 
     parsed = {
         "timestamp": data["timestamp"],
-        "ping_jitter": data["ping"]["jitter"],
-        "ping_latency": data["ping"]["latency"],
-        "download_bandwidth": data["download"]["bandwidth"],
-        "upload_bandwidth": data["upload"]["bandwidth"],
-        "packet_loss": data.get("packetLoss", 0.0),
+        "ping_jitter": float(data["ping"]["jitter"]),
+        "ping_latency": float(data["ping"]["latency"]),
+        "download_bandwidth": float(data["download"]["bandwidth"]),
+        "upload_bandwidth": float(data["upload"]["bandwidth"]),
+        "packet_loss": float(data.get("packetLoss", 0.0)),
         "isp": data.get("isp", "unknown"),
         "interface_internal_ip": data["interface"]["internalIp"],
         "interface_name": data["interface"]["name"],
