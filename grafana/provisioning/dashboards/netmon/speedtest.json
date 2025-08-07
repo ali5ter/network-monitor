@@ -1,77 +1,479 @@
 {
-  "id": null,
-  "title": "Internet Speed Monitor",
-  "tags": ["network", "speedtest"],
-  "timezone": "browser",
-  "schemaVersion": 37,
-  "version": 1,
-  "refresh": "30s",
-  "time": { "from": "now-24h", "to": "now" },
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
   "panels": [
     {
-      "type": "timeseries",
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Mbps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "query": "from(bucket: \"speedtests\")\n  |> range(start: -24h)\n  |> filter(fn: (r) => \n    r._measurement == \"network_speed\" and \n    r._field == \"download_bandwidth\"\n  )\n  |> map(fn: (r) => ({ r with _value: float(v: r._value) / 125000.0 }))",
+          "refId": "A"
+        }
+      ],
       "title": "Download Speed (Mbps)",
-      "datasource": "InfluxDB",
-      "targets": [
-        {
-          "refId": "A",
-          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"download_bandwidth\") |> map(fn: (r) => ({ r with _value: float(v: r._value) / 1000000.0 }))"
-        }
-      ],
-      "fieldConfig": { "defaults": { "unit": "Mbps" } },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 }
+      "type": "timeseries"
     },
     {
-      "type": "timeseries",
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Mbps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "query": "from(bucket: \"speedtests\")\n  |> range(start: -24h)\n  |> filter(fn: (r) => \n    r._measurement == \"network_speed\" and \n    r._field == \"upload_bandwidth\"\n  )\n  |> map(fn: (r) => ({ r with _value: float(v: r._value) / 125000.0 }))",
+          "refId": "B"
+        }
+      ],
       "title": "Upload Speed (Mbps)",
-      "datasource": "InfluxDB",
-      "targets": [
-        {
-          "refId": "B",
-          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"upload_bandwidth\") |> map(fn: (r) => ({ r with _value: float(v: r._value) / 1000000.0 }))"
-        }
-      ],
-      "fieldConfig": { "defaults": { "unit": "Mbps" } },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 }
+      "type": "timeseries"
     },
     {
-      "type": "timeseries",
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"ping_latency\")",
+          "refId": "C"
+        }
+      ],
       "title": "Ping Latency (ms)",
-      "datasource": "InfluxDB",
-      "targets": [
-        {
-          "refId": "C",
-          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"ping_latency\")"
-        }
-      ],
-      "fieldConfig": { "defaults": { "unit": "ms" } },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 8 }
+      "type": "timeseries"
     },
     {
-      "type": "timeseries",
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"ping_jitter\")",
+          "refId": "D"
+        }
+      ],
       "title": "Ping Jitter (ms)",
-      "datasource": "InfluxDB",
-      "targets": [
-        {
-          "refId": "D",
-          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"ping_jitter\")"
-        }
-      ],
-      "fieldConfig": { "defaults": { "unit": "ms" } },
-      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 8 }
+      "type": "timeseries"
     },
     {
-      "type": "timeseries",
-      "title": "Packet Loss (%)",
       "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.4",
       "targets": [
         {
-          "refId": "E",
-          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"packet_loss\")"
+          "query": "from(bucket: \"speedtests\") |> range(start: -24h) |> filter(fn: (r) => r._measurement == \"network_speed\" and r._field == \"packet_loss\")",
+          "refId": "E"
         }
       ],
-      "fieldConfig": { "defaults": { "unit": "percent" } },
-      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 14 }
+      "title": "Packet Loss (%)",
+      "type": "timeseries"
     }
-  ]
+  ],
+  "preload": false,
+  "refresh": "30s",
+  "schemaVersion": 41,
+  "tags": [
+    "network",
+    "speedtest"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Internet Speed Monitor",
+  "uid": "ace24a6b-a27c-43d8-980d-52b995076cc0",
+  "version": 1
 }
