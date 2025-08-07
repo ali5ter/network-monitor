@@ -2,7 +2,7 @@
 
 Monitor your internet connection quality over time using Speedtest CLI, InfluxDB, Grafana, and `launchd` on macOS.
 
-I wrote this when I was not seeing the bandwidth that my cable provider said they were providing me and wanted a way to provide some evidence of what I was seeing on my end.
+I created this project to monitor and document my internet speeds after noticing discrepancies between the bandwidth promised by my cable provider and what I was actually experiencing. It provides a reliable way to collect and visualize evidence of connection quality from the user's perspective.
 
 ## Features
 

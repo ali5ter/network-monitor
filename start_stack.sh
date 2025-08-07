@@ -27,6 +27,14 @@ if ! command -v docker &>/dev/null; then
   echo "❌ Docker is not installed. Please install Docker Desktop for macOS: https://www.docker.com/products/docker-desktop"
   exit 1
 fi
+if ! docker info >/dev/null 2>&1; then
+  open -a "Docker"
+  echo "Waiting for Docker to start..."
+  while ! docker info >/dev/null 2>&1; do
+    sleep 1
+  done
+fi
+echo "🐳 Docker Desktop running."
 
 if ! command -v brew &>/dev/null; then
   echo "❌ Homebrew is not installed. Please install it first: https://brew.sh/"
