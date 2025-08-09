@@ -62,8 +62,7 @@ echo "🛠️ Setting up Launchd for network speed tests..."
 mkdir -p "$HOME/Library/LaunchAgents"
 export PLIST_PATH="$HOME/Library/LaunchAgents/edu.lewis-bowen.networkspeed.plist"
 export PYTHON_SCRIPT_PATH="$PWD/network_speed_logger.py"
-# shellcheck disable=SC2155
-export PYTHON_BIN="$(which python3)"
+export PYTHON_BIN="$PWD/.venv/bin/python"
 
 envsubst < ./launchd/network_speed.plist.template > "$PLIST_PATH"
 
