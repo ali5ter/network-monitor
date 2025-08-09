@@ -10,6 +10,7 @@ import json
 import logging
 import requests
 import sys
+import shutil
 
 from datetime import datetime
 from rich.logging import RichHandler
@@ -72,11 +73,13 @@ def setup_logging(loglevel="INFO", log_file=None):
     logging.info(f"Logging initialized at level: {loglevel}, interactive={is_interactive()}")
 
 def run_speedtest():
+    speedtest_path = shutil.which("speedtest")
     try:
         result = subprocess.run(
-            ['/opt/homebrew/bin/speedtest', '--accept-license', '--accept-gdpr', '-f', 'json'],
+            [speedtest_path, '--accept-license', '--accept-gdpr', '-f', 'json'],
             capture_output=True, check=True, text=True
         )
+
         logging.info("Speedtest completed")
         logging.debug(f"Raw speedtest JSON: {result.stdout.strip()}")
         return result.stdout.strip()
