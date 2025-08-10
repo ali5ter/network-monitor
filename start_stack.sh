@@ -80,7 +80,7 @@ echo "🌐 InfluxDB: http://${SERVER_IP}:${INFLUXDB_PORT}"
 echo "    - Org: ${INFLUXDB_ORG}"
 echo "    - Bucket: ${INFLUXDB_BUCKET}"
 echo "    - Token: ${INFLUXDB_ADMIN_TOKEN}"
-echosudo 
+echo
 echo "🌐 Grafana: http://${SERVER_IP}:${GRAFANA_PORT}"
 echo "    - Username: ${GRAFANA_ADMIN_USER}"
 echo "    - Password: ${GRAFANA_ADMIN_PASSWORD}"
