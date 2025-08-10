@@ -80,7 +80,7 @@ echo "🌐 InfluxDB: http://${SERVER_IP}:${INFLUXDB_PORT}"
 echo "    - Org: ${INFLUXDB_ORG}"
 echo "    - Bucket: ${INFLUXDB_BUCKET}"
 echo "    - Token: ${INFLUXDB_ADMIN_TOKEN}"
-echo
+echosudo 
 echo "🌐 Grafana: http://${SERVER_IP}:${GRAFANA_PORT}"
 echo "    - Username: ${GRAFANA_ADMIN_USER}"
 echo "    - Password: ${GRAFANA_ADMIN_PASSWORD}"
@@ -88,3 +88,5 @@ echo
 echo "📄 Launchd job loaded: $PLIST_PATH"
 echo "    - Log file: $HOME/Library/Logs/networkspeed.log"
 echo "    - Error log file: $HOME/Library/Logs/networkspeed.err.log"
+echo "    - Stop launchd job: launchctl unload $PLIST_PATH"
+echo "    - Start launchd job: launchctl load $PLIST_PATH"
