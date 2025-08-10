@@ -86,3 +86,5 @@ echo "    - Username: ${GRAFANA_ADMIN_USER}"
 echo "    - Password: ${GRAFANA_ADMIN_PASSWORD}"
 echo
 echo "📄 Launchd job loaded: $PLIST_PATH"
+echo "    - Log file: $HOME/Library/Logs/networkspeed.log"
+echo "    - Error log file: $HOME/Library/Logs/networkspeed.err.log"

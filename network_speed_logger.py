@@ -163,6 +163,8 @@ def load_env_file():
     logging.debug(f"INFLUXDB_BUCKET={os.environ.get('INFLUXDB_BUCKET')}")
 
 def main():
+    os.environ["PATH"] += os.pathsep + "/opt/homebrew/bin" + os.pathsep + "/usr/local/bin"
+
     load_env_file()
 
     logging.info("Starting network speed test...")
