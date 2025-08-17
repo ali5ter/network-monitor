@@ -70,6 +70,13 @@ To check the agent status:
 launchctl list | grep networkspeed
 ```
 
+### Removing the launchd agent
+
+```bash
+launchctl unload ~/Library/LaunchAgents/edu.lewis-bowen.networkspeed.plist
+rm ~/Library/LaunchAgents/edu.lewis-bowen.networkspeed.plist
+```
+
 ## Dashboard
 
 1. Open `http://${SERVER_IP}:3000`
